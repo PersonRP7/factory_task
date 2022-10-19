@@ -14,6 +14,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
+
+
 class Category extends Model
 {
     use HasFactory;
@@ -21,5 +23,13 @@ class Category extends Model
 
     use HasSlug;
 
-    
+    protected $fillable = ['title'];
+
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+
 }
