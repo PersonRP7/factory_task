@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            // soft deletes
             $table->softDeletes();
+            // soft deletes
+            
+            $table->string('title');
+
             $table->timestamps();
         });
     }
