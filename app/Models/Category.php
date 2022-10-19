@@ -1,35 +1,47 @@
 <?php
 
 namespace App\Models;
+// namespace App\Models\Base;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Model;
 
 // soft deletes
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 // soft deletes
 
 // spatie sluggable
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+// use Spatie\Sluggable\HasSlug;
+// use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
 
 
-class Category extends Model
+// class Category extends Model
+// {
+//     use HasFactory;
+//     use SoftDeletes;
+
+//     use HasSlug;
+
+//     protected $fillable = ['title'];
+
+//     public function getSlugOptions() : SlugOptions
+//     {
+//         return SlugOptions::create()
+//             ->generateSlugsFrom('title')
+//             ->saveSlugsTo('slug');
+//     }
+
+// }
+
+class Category extends Base 
 {
-    use HasFactory;
-    use SoftDeletes;
-
-    use HasSlug;
-
-    protected $fillable = ['title'];
-
-    public function getSlugOptions() : SlugOptions
+        public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
-
 }
