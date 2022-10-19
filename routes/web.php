@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\MyApiClient;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +19,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('/entrypoint', function() {
+//     return response()->json([
+//         // 'name' => App\Helpers\Bridge::helloWorld(),
+//         'name' => MyApiClient::helloWorld(),
+//         'state' => 'CA',
+//     ]);
+// });
+
+Route::get('/entrypoint', function() {
+    return response()->json([
+        // 'name' => App\Helpers\Bridge::helloWorld(),
+        'name' => MyApiClient::category1(),
+        'state' => 'CA',
+    ]);
+});
+
+
