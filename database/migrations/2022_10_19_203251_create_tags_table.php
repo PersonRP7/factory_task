@@ -18,8 +18,12 @@ return new class extends Migration
             // soft deletes
             $table->softDeletes();
             // soft deletes
-            
+
             $table->string('title');
+
+            // Spatie sluggable
+            $table->string('slug');
+            // Spatie sluggable
 
             $table->timestamps();
         });
