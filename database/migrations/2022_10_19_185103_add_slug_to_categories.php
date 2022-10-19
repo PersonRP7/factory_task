@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            //
+            // Spatie sluggable
+            $table->string('slug');
+            // Spatie sluggable
         });
     }
 
@@ -26,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            //
+            $table->dropColumn(['slug']);
         });
     }
 };

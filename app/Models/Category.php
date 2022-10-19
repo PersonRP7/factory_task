@@ -9,8 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // soft deletes
 
+// spatie sluggable
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+// spatie sluggable
+
 class Category extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    use HasSlug;
+
+    
 }
