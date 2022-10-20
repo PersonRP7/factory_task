@@ -36,4 +36,7 @@ Route::get('/entrypoint', function() {
     ]);
 });
 
+// Define a route, call a controller in the route,
+// 
+
 
