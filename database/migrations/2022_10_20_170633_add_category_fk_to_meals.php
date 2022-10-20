@@ -17,7 +17,7 @@ return new class extends Migration
 
             // Category fk
             $table->unsignedBigInteger('category_id')->nullable();
-            
+
             $table->foreign('category_id')->references('id')
             ->on('categories')->onDelete('cascade')
             ;
@@ -33,7 +33,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('meals', function (Blueprint $table) {
-            //
+            $table->dropColumn(['category_id']);
         });
     }
 };
