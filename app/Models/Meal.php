@@ -38,8 +38,4 @@ class Meal extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function category()
-    {
-        return $this->hasOne(Category::class);
-    }
 }
