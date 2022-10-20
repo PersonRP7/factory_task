@@ -21,7 +21,7 @@ class Tag extends Model
 
     use HasSlug;
 
-    protected $fillable = ['title'];
+    protected $fillable = ['tag_id', 'title'];
 
     public function getSlugOptions() : SlugOptions
     {
