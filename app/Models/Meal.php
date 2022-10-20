@@ -21,7 +21,7 @@ class Meal extends Model
 
     use HasSlug;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'status'];
 
     public function getSlugOptions() : SlugOptions
     {
