@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('meals', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('tag_id');
+
+            $table->foreign('tag_id')->references('id')
+            ->on('tags')
+            ;
         });
     }
 

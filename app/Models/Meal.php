@@ -25,7 +25,7 @@ class Meal extends Model
 
     use HasSlug;
 
-    protected $fillable = ['category_id','title', 'description', 'status'];
+    protected $fillable = ['category_id', 'tag_id', 'title', 'description', 'status'];
 
     protected $attributes = [
         'status' => 'created',
