@@ -14,6 +14,10 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
+// Category
+use App\Models\Category;
+//Category
+
 class Meal extends Model
 {
     use HasFactory;
@@ -21,7 +25,7 @@ class Meal extends Model
 
     use HasSlug;
 
-    protected $fillable = ['title', 'description', 'status'];
+    protected $fillable = ['category_id','title', 'description', 'status'];
 
     protected $attributes = [
         'status' => 'created',
@@ -32,5 +36,10 @@ class Meal extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class);
     }
 }
