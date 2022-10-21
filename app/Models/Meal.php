@@ -18,6 +18,10 @@ use Spatie\Sluggable\SlugOptions;
 use App\Models\Category;
 //Category
 
+// Tag
+use App\Models\Tag;
+// /Tag
+
 class Meal extends Model
 {
     use HasFactory;
@@ -30,6 +34,11 @@ class Meal extends Model
     protected $attributes = [
         'status' => 'created',
     ];
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 
     public function getSlugOptions() : SlugOptions
     {

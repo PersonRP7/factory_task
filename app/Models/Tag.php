@@ -14,6 +14,10 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
+// meal
+use App\Models\Meal;
+// meal
+
 class Tag extends Model
 {
     use HasFactory;
@@ -22,6 +26,11 @@ class Tag extends Model
     use HasSlug;
 
     protected $fillable = ['title'];
+
+    public function meal()
+    {
+        return $this->belongsTo(Meal::class);
+    }
 
     public function getSlugOptions() : SlugOptions
     {
