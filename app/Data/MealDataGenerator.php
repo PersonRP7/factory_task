@@ -4,6 +4,7 @@ namespace App\Data;
 // use App\Data\MealDataGenerator;
 
 use App\Models\Meal;
+use Carbon\Carbon;
 
 class MealDataGenerator
 {
