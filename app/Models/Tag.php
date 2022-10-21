@@ -30,7 +30,7 @@ class Tag extends Model
 
     public function meals()
     {
-        return $this->belongsToMany(Meal::class);
+        return $this->belongsToMany(Meal::class, 'tag_meal');
     }
 
 }

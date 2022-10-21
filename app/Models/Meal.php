@@ -10,7 +10,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
-use App\Model\Tag;
+use App\Models\Tag;
 
 class Meal extends Model
 {
@@ -38,6 +38,6 @@ class Meal extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'tag_meal');
     }
 }
