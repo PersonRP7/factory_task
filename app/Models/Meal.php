@@ -22,8 +22,11 @@ class Meal extends Model
         'status' => 'created',
     ];
 
+    // protected $fillable = [
+    //     'title', 'description', 'status', 'slug', 'deleted_at'
+    // ]
     protected $fillable = [
-        'title', 'description', 'status', 'slug', 'deleted_at'
+        'title', 'description', 'status', 'deleted_at'
     ]
 
     public function getSlugOptions() : SlugOptions
