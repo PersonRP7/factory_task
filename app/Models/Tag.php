@@ -19,7 +19,7 @@ class Tag extends Model
 
     protected $fillable = [
         'title'
-    ]
+    ];
 
     public function getSlugOptions() : SlugOptions
     {

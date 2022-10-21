@@ -27,7 +27,7 @@ class Meal extends Model
     // ]
     protected $fillable = [
         'title', 'description', 'status', 'deleted_at'
-    ]
+    ];
 
     public function getSlugOptions() : SlugOptions
     {
