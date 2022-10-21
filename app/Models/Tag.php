@@ -10,6 +10,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
+use App\Models\Meal;
+
 class Tag extends Model
 {
     use HasFactory;
@@ -25,4 +27,10 @@ class Tag extends Model
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
+
+    public function meals()
+    {
+        return $this->belongsToMany(Meal::class);
+    }
+
 }
