@@ -14,6 +14,18 @@ class MealDataGenerator
         {
             return false;
         }
-        return true;
+        // return true;
+
+    }
+
+    // 1493902343
+    public static function getStrFromUnixT($unixTimestamp)
+    {
+        return Carbon::createFromTimestamp($unixTimestamp)->toDateTimeString(); 
+    }
+
+    public static function ls($cls)
+    {
+        return $cls::all();
     }
 }
