@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('description');
+            $table->string('status');
+            $table->string('slug');
+
+            // soft delete
+            $table->timestamp('deleted_at')->nullable();
+            // soft delete
+
             $table->timestamps();
         });
     }
