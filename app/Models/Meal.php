@@ -20,6 +20,10 @@ class Meal extends Model
         'status' => 'created',
     ];
 
+    protected $fillable = [
+        'title', 'description', 'status', 'slug', 'deleted_at'
+    ]
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
