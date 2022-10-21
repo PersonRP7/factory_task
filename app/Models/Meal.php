@@ -40,4 +40,5 @@ class Meal extends Model
     {
         return $this->belongsToMany(Tag::class, 'tag_meal');
     }
+
 }

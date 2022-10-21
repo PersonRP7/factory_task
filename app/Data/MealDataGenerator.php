@@ -1,11 +1,18 @@
 <?php
 namespace App\Data;
 
-// use App\Data\UserDataGenerator;
+// use App\Data\MealDataGenerator;
+
+use App\Models\Meal;
+
 class MealDataGenerator
 {
-    public static function hello()
+    public static function diffTimeComparison($queryParameter)
     {
-        return "Hello World";
+        if (!ctype_digit($queryParameter))
+        {
+            return false;
+        }
+        return true;
     }
 }
