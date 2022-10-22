@@ -13,32 +13,31 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($params)
+    public function index(Request $request)
     {
-        $params = explode('/', $params);
-        // return $params;
-        // foreach ($params as $param) {
-        //     if(str_starts_with($param, "with"))
-        //     {
-        //         return $param;
-        //         // return explode(',', $param);
-        //     }
+        // $name = $request->query('name');
+        // $data1 = explode('/', $request->query('data'));
+        $tags = $request->query('tags');
+        $tags_split = explode(',', $tags);
+
+        $with = $request->query('with');
+        $with_split = explode(',', $with);
+        // return $with_split;
+        // foreach ($with_split as $w) {
+        //     echo $w;
         // }
-        foreach ($params as $param) {
-            if(str_starts_with($param, "with"))
-            {
-                // return $param;
-                // return explode(',', $param);
-                // return explode(',', $param);
-                // return explode('=', $param);
-                $one = explode('=', $param);
-                unset($one[0]);
-                $two =  $one[1];
-                return $two;
-                $three = explode(',', $two);
-                return $three;
-            }
+        $with_i = implode(',', $with_split);
+        // return $with_i;
+        $w_exp = explode(',', $with_i);
+        // return $w_exp;
+        foreach ($w_exp as $key) {
+            echo $key;
         }
+        // return $tags_split[1];
+        // foreach ($tags_split as $tag) {
+        //     echo $tag;
+        // }
+        // return $tags;
     }
 
     /**

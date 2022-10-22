@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\MealController;
 use App\Http\Controllers\MealController;
 
 /*
@@ -87,9 +88,20 @@ use App\Http\Controllers\MealController;
 //     return $name;  
 // });  
 
-Route::get('/lang/{lang}/keys/{keys?}', function ($lang, $keys=null) {  
-    return $keys;  
-});  
+// Route::get('/lang/{lang}/keys/{keys?}', function ($lang, $keys=null) {  
+//     return $keys;  
+// });  
 
+// Route::get('/', function() {
+//     return "Hello World";
+// });
 
+// Route::get('/', MealController::class);
+// Route::get('/', 'App/Http/Controllers/MealController');
+// Route::get('/', 'App/Http/Controllers/MealController@index')->name('meal');
+// Route::get('/', 'App\Http\Controllers\MealController');
+
+// Route::controller(MealController::class);
+
+Route::resource('/', MealController::class);
 
