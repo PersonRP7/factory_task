@@ -31,8 +31,4 @@ class MealDataGenerator
         return Carbon::createFromTimestamp($unixTimestamp)->toDateTimeString(); 
     }
 
-    public static function ls($cls)
-    {
-        return $cls::all();
-    }
 }
