@@ -33,17 +33,38 @@ class MealDataGenerator
         return $timeStamp;
     }
 
+    // public static function statusGetter($queryParam)
+    // {
+    //     if ($queryParam == 'created')
+    //     {
+    //         return Meal::whereNull('deleted_at')->get();
+    //     }
+    //     if ($queryParam == 'updated')
+    //     {
+    //         // return Meal::whereNot('created_at', '=', 'updated_at')->get();
+    //         return Meal::whereColumn('updated_at', '>', 'created_at')->get();
+    //     }
+    // }
     public static function statusGetter($queryParam)
     {
         if ($queryParam == 'created')
         {
             return Meal::whereNull('deleted_at')->get();
         }
-        if ($queryParam == 'updated')
+        if (ctype_digit($queryParam))
         {
-            // return Meal::whereNot('created_at', '=', 'updated_at')->get();
-            return Meal::whereColumn('updated_at', '>', 'created_at')->get();
+            $carbonObject = Carbon::createFromTimestamp($queryParam);
+            $params = ["created_at", "updated_at", "deleted_at"];
+            foreach ($params as $param) {
+                foreach (Meal::all() as $meal) {
+                    if ($meal->$param > $carbonObject) {
+                        echo $meal;
+                    }
+                }
+            }       
         }
+        // $carbonObject = Carbon::createFromTimestamp($unixTimestamp);
+        // return $cls::whereDate($time_stamp, '<', $carbonObject)->get();   
     }
 
     // 1493902343
