@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,73 @@ use Illuminate\Support\Facades\Route;
 //     return $name;  
 // });  
 
-Route::get('with/{with?}', function ($with=null) {  
-    // return $with;
-    $values = explode(',', $with);
-    return $values;  
+// Route::get('with/{with?}', function ($with=null) {  
+//     // return $with;
+//     $values = explode(',', $with);
+//     return $values;  
+// });  
+
+// Route::get('with/{with?}', function ($with=null) {  
+//     // return $with;
+//     $values = explode(',', $with);
+//     return $values;  
+// });  
+
+// Route::get('/per_page/{per_page?}/tags/{tags?}/', 
+// function ($per_page=null, $tags=null) 
+// {  
+//     $tags = explode(',', $tags);
+//     return $tags;
+//     // $values = explode(',', $with);
+//     // return $values;
+
+// });  
+
+// Route::get('/per_page/{per_page?}/tags/{tags?}/', 
+// function ($per_page=null, $tags=null) 
+// {  
+//     // $tags = explode(',', $tags);
+//     // return $tags;
+//     return "text";
+//     // $values = explode(',', $with);
+//     // return $values;
+
+// });  
+
+// Route::get('/user/{name?}', function ($name = null) {
+//     return $name;
+// });
+
+// Route::get('/user/{name?}/surname/{surname?}/', function ($name = null, $surname = null) {
+//     return $name;
+// });
+
+// Route::get('/user/{name?}/surname/{surname?}/', function ($name = null, $surname = null) {
+//     return "text";
+// });
+
+// Route::get('/{params}', 'App\Http\Controllers\MealController@index')
+// ->where('params', '.*');
+
+// Route::get('/name/{name?}/keys/{keys?}', function($name = null, $keys = null){
+//     return $keys;
+// });
+
+// Route::get('name/{name?}', function ($name=null) {  
+//         return $name;  
+// });  
+
+// Route::get('name/{name?}/keys/{keys?}', function ($name=null, $keys=null) {  
+//     return $name;  
+// });  
+
+// Route::get('/name/{name?}/keys/{keys?}', function ($name=null, $keys=null) {  
+//     return $name;  
+// });  
+
+Route::get('/lang/{lang}/keys/{keys?}', function ($lang, $keys=null) {  
+    return $keys;  
 });  
+
+
 

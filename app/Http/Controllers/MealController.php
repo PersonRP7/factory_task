@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MealController extends Controller
 {
@@ -12,9 +13,32 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($params)
     {
-        //
+        $params = explode('/', $params);
+        // return $params;
+        // foreach ($params as $param) {
+        //     if(str_starts_with($param, "with"))
+        //     {
+        //         return $param;
+        //         // return explode(',', $param);
+        //     }
+        // }
+        foreach ($params as $param) {
+            if(str_starts_with($param, "with"))
+            {
+                // return $param;
+                // return explode(',', $param);
+                // return explode(',', $param);
+                // return explode('=', $param);
+                $one = explode('=', $param);
+                unset($one[0]);
+                $two =  $one[1];
+                return $two;
+                $three = explode(',', $two);
+                return $three;
+            }
+        }
     }
 
     /**
