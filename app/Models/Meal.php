@@ -12,6 +12,7 @@ use Spatie\Sluggable\SlugOptions;
 
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Ingredient;
 
 class Meal extends Model
 {
@@ -51,6 +52,11 @@ class Meal extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'tag_meal');
+    }
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class, 'ingredient_meal');
     }
 
     public function category()
