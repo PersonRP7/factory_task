@@ -10,6 +10,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
+use App\Models\Meal;
+
 class Category extends Model
 {
     use HasFactory;
@@ -24,5 +26,10 @@ class Category extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function meals()
+    {
+        return $this->hasMany(Meal::class);
     }
 }
