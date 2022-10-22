@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+// Route::get('user/{name?}', function ($name=null) {  
+//     return $name;  
+// });  
+
+Route::get('with/{with?}', function ($with=null) {  
+    // return $with;
+    $values = explode(',', $with);
+    return $values;  
+});  
+
