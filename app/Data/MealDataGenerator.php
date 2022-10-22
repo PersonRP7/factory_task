@@ -33,6 +33,19 @@ class MealDataGenerator
         return $timeStamp;
     }
 
+    public static function statusGetter($queryParam)
+    {
+        if ($queryParam == 'created')
+        {
+            return Meal::whereNull('deleted_at')->get();
+        }
+        if ($queryParam == 'updated')
+        {
+            // return Meal::whereNot('created_at', '=', 'updated_at')->get();
+            return Meal::whereColumn('updated_at', '>', 'created_at')->get();
+        }
+    }
+
     // 1493902343
     // 1697902398
     public static function getStrFromUnixT($unixTimestamp)

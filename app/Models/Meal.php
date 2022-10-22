@@ -35,6 +35,7 @@ class Meal extends Model
     public function softDelete()
     {
         $this->deleted_at = now();
+        $this->status = 'deleted';
         $this->save();
     }
     // soft delete
