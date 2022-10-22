@@ -29,6 +29,16 @@ class Meal extends Model
         'title', 'description', 'status', 'deleted_at'
     ];
 
+    // soft delete 
+    //Custom implementation because laravel soft delete trait disables mysql cascades
+    //and doesn't implement soft delete for related models.
+    public function softDelete()
+    {
+        $this->deleted_at = now();
+        $this->save();
+    }
+    // soft delete
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
