@@ -14,8 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('meal_translations', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id');
+            $table->unsignedBigInteger('post_id')->nullable();
+            $table->string('locale')->index();
+            $table->string('title');
+            $table->text('description');
+        
+            $table->unique(['meal_id', 'locale']);
+            $table->foreign('meal_id')->references('id')->on('meal')->onDelete('cascade');
         });
     }
 
