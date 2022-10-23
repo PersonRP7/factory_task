@@ -74,18 +74,25 @@ class MealDataGenerator
         return Carbon::createFromTimestamp($unixTimestamp)->toDateTimeString(); 
     }
 
-
-    public static function main($request)
-    {
-        // return "Hello from MealDataGenerator";
-        $tags = $request->query('tags');
-        return $tags;
-    }
-
-    // public function __construct($request)
+    // public static function tagSplitter($request)
     // {
-    //     // echo "Hello World from static constructor";
-    //     $tags = $request->query('tags');
+    //     // return $request->query('tags');
+    //     $tags = explode(',', $request->query('tags'));
     //     return $tags;
     // }
+
+    // Splits a comma delimited string. Fetches tags / with
+    public static function splitter($request, $stringData)
+    {
+        return explode(',', $stringData);
+    }
+
+    #per_page, page, category, tags, with, lang*, diff_time
+    public static function main($request)
+    {
+        $tags = MealDataGenerator::tagSplitter($request, "tags");
+        foreach ($tags as $tag) {
+            echo $tag;
+        }
+    }
 }
