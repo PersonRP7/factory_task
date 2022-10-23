@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('meal_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('meal_id')->nullable();
+            $table->unsignedBigInteger('meal_id');
+            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('title');
-            $table->string('description');
-        
-            $table->unique(['meal_id', 'locale']);
-            $table->foreign('meal_id')->references('id')->on('meal')->onDelete('cascade');
+            $table->text('description');
+
+            // $table->unique(['post_id', 'locale']);
+            // $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });
     }
 
