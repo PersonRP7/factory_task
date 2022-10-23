@@ -72,17 +72,28 @@ class MealDataGenerator
     }
 
     // Splits a comma delimited string. Fetches tags / with
+    // public static function splitter($request, $stringData)
+    // {
+    //     return explode(',', $stringData);
+    // }
     public static function splitter($request, $stringData)
     {
-        return explode(',', $stringData);
+        return explode(',', $request->query($stringData));
+    }
+
+    public static function paramGetter($request, $name)
+    {
+        return $request->query($name);
     }
 
     #per_page, page, category, tags, with, lang*, diff_time
     public static function main($request)
     {
-        $tags = MealDataGenerator::tagSplitter($request, "tags");
+        $lang = MealDataGenerator::paramGetter($request, "lang");
+        $tags = MealDataGenerator::splitter($request, "tags");
         foreach ($tags as $tag) {
             echo $tag;
         }
+        echo $lang;
     }
 }
