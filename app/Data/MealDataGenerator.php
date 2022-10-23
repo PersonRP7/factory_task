@@ -74,4 +74,18 @@ class MealDataGenerator
         return Carbon::createFromTimestamp($unixTimestamp)->toDateTimeString(); 
     }
 
+
+    public static function main($request)
+    {
+        // return "Hello from MealDataGenerator";
+        $tags = $request->query('tags');
+        return $tags;
+    }
+
+    // public function __construct($request)
+    // {
+    //     // echo "Hello World from static constructor";
+    //     $tags = $request->query('tags');
+    //     return $tags;
+    // }
 }
