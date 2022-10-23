@@ -33,8 +33,8 @@ class Ingredient extends Model
         return $this->belongsToMany(Meal::class, 'ingredient_meal');
     }
 
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'tag_meal');
-    }
+    // public function tags()
+    // {
+    //     return $this->belongsToMany(Tag::class, 'tag_meal');
+    // }
 }

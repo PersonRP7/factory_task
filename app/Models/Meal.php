@@ -64,4 +64,23 @@ class Meal extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function scopeByTag()
+    {
+
+    }
+
+    // public function scopeByTag(Builder $query, array $ids){
+    //     foreach($ids as $id){
+    //          $query->whereHas(‘tags’, fn ($query) => $query->where(‘tag_id’, $tag))
+    //     }
+    //     return $query;
+    // }
+
+    // public function scopeByTag($query, $ids)
+    // {
+    //     foreach ($ids as $id) {
+    //         $query->whereHas('tags', fn ($query) => $query->where('tag_id', $tag));
+    //     }
+    //     return $query;
+    // }
 }

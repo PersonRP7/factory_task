@@ -86,6 +86,15 @@ class MealDataGenerator
         return $request->query($name);
     }
 
+    public static function scopeByTag($ids)
+    {
+        $query = Meal::whereHas('tags', function($query) use ($ids) {$query->where('tag_id', $ids);});
+        foreach ($ids as $id) {
+            $query->whereHas('tags', fn ($query) => $query->where('tag_id', $id));
+        }
+        return $query->first();
+    }
+
     #per_page, page, category, tags, with, lang*, diff_time
     public static function main($request)
     {
