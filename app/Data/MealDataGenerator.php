@@ -95,14 +95,26 @@ class MealDataGenerator
         return $query->first();
     }
 
-    #per_page, page, category, tags, with, lang*, diff_time
     public static function main($request)
     {
         $lang = MealDataGenerator::paramGetter($request, "lang");
         $tags = MealDataGenerator::splitter($request, "tags");
-        foreach ($tags as $tag) {
-            echo $tag;
-        }
-        echo $lang;
+        $tgs = MealDataGenerator::scopeByTag($tags);
+        echo $tgs;
+        // foreach ($tags as $tag) {
+        //     echo $tag;
+        // }
+        // echo $lang;
     }
+
+    #per_page, page, category, tags, with, lang*, diff_time
+    // public static function main($request)
+    // {
+    //     $lang = MealDataGenerator::paramGetter($request, "lang");
+    //     $tags = MealDataGenerator::splitter($request, "tags");
+    //     foreach ($tags as $tag) {
+    //         echo $tag;
+    //     }
+    //     echo $lang;
+    // }
 }
