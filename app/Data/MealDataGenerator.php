@@ -86,6 +86,7 @@ class MealDataGenerator
         return $request->query($name);
     }
 
+    #returns only one Meal object.
     public static function scopeByTag($ids)
     {
         $query = Meal::whereHas('tags', function($query) use ($ids) {$query->where('tag_id', $ids);});
@@ -95,16 +96,54 @@ class MealDataGenerator
         return $query->first();
     }
 
+    // public static function getByTag($request)
+    // {
+    //     $tag_ids = explode(',', $request->query('tags'));;
+    //     $meals = [];
+    //     $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
+    //     foreach ($data as $d) {
+    //         array_push($meals, $d);
+    //     }
+    
+    //     foreach ($meals as $meal) {
+    //         if($meal->tags->count() == count($tag_ids))
+    //         {
+    //             return $meal;
+    //         }
+    //     }
+    // }
+
+    public static function getByTag($request, $lang, $diffTime)
+    {
+        $tag_ids = explode(',', $request->query('tags'));;
+        $meals = [];
+        $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
+        foreach ($data as $d) {
+            $d->title = $d->title . " na " . $lang . " jeziku ";
+            $d->description = $d->description . " na " . $lang . " jeziku ";
+            array_push($meals, $d);
+            // array_push($meals, $diffTime);
+        }
+    
+        foreach ($meals as $meal) {
+            if($meal->tags->count() == count($tag_ids))
+            {
+                return $meal;
+                // return $diffTime;
+            }
+        }
+    }
+
     public static function main($request)
     {
         $lang = MealDataGenerator::paramGetter($request, "lang");
         $tags = MealDataGenerator::splitter($request, "tags");
-        $tgs = MealDataGenerator::scopeByTag($tags);
-        echo $tgs;
-        // foreach ($tags as $tag) {
-        //     echo $tag;
-        // }
-        // echo $lang;
+        $diffTime = $request->query("diff_time");
+        $meals = MealDataGenerator::getByTag($request, $lang, $diffTime);
+        // return $meals;
+        // return $meals->toJson();
+        return $meals;
+    
     }
 
     #per_page, page, category, tags, with, lang*, diff_time

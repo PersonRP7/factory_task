@@ -131,23 +131,23 @@ Route::get('/two', function() {
 //     // return $data;
 // });
 
-Route::get('/four', function() {
-    // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
-    $tag_ids = [1, 2, 3];
-    $meals = [];
-    $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
-    foreach ($data as $d) {
-        array_push($meals, $d);
-    }
+// Route::get('/four', function() {
+//     // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
+//     $tag_ids = [1, 2, 3];
+//     $meals = [];
+//     $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
+//     foreach ($data as $d) {
+//         array_push($meals, $d);
+//     }
 
-    foreach ($meals as $meal) {
-        if($meal->tags->count() == count($tag_ids))
-        {
-            print_r($meal);
-        }
-    }
-    // return $data;
-});
+//     foreach ($meals as $meal) {
+//         if($meal->tags->count() == count($tag_ids))
+//         {
+//             print_r($meal);
+//         }
+//     }
+//     // return $data;
+// });
 
 // Route::get('/four', function() {
 //     // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
