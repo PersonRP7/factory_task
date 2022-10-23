@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('meal_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('post_id')->nullable();
+            $table->unsignedBigInteger('meal_id')->nullable();
             $table->string('locale')->index();
             $table->string('title');
             $table->text('description');
