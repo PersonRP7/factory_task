@@ -22,6 +22,7 @@ use App\Http\Controllers\MealController;
 Route::resource('/', MealController::class);
 
 use App\Models\Meal;
+use App\Models\Tag;
 
 // Route::get('/one/{lang}', function($lang) {
 //     $meal1 = Meal::first();
@@ -64,4 +65,92 @@ Route::get('/two', function() {
 //         array_push($mls, $res);
 //     }
 //     return $res;
+// });
+
+// Route::get('/three', function() {
+//     $id=[1,2,3];
+//     $data = Meal::where(function($query)use($id){
+//         foreach ($id as $value){
+//             $query->whereHas('tags',function ($query)use($value){
+
+//                 $query->where('tag_id',$value);
+
+
+//             });
+//         }
+
+
+//     })->get();
+//     echo $data;
+// });
+
+// use App\Models\Tag;
+// Route::get('/four', function() {
+//     $tag_ids = [1, 2, 3];
+//     $meal_ids = [];
+//     foreach (Meal::all() as $meal) {
+//         array_push($meal_ids, $meal->id);
+//     }
+//     // print_r($meal_ids);
+
+// });
+
+// Route::get('/four', function() {
+//     $tag_ids = [1, 2, 3];
+//     $meal_ids = [];
+//     // Tag::whereHas('meals', function($query){return $query->where('meal_id', 7);})->get();
+//     foreach ($tag_ids as $tag) {
+        
+//     }
+// });
+
+// Route::get('/four', function() {
+//     // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
+//     $tag_ids = [1, 2, 3];
+//     $mls = [];
+//     foreach ($tag_ids as $id) {
+//         $res = Meal::whereHas('tags', function($query) use ($id) {$query->where('tag_id', $id);})->first();
+//         array_push($mls, $res);
+//     }
+//     return $mls;
+// });
+
+// meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
+// Route::get('/four', function() {
+//     // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
+//     $tag_ids = [1, 2, 3];
+//     $meals = [];
+//     $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
+//     foreach ($data as $d) {
+//         array_push($meals, $d);
+//     }
+    
+//     foreach ($meals as $meal) {
+//         echo $meal;
+//     }
+//     // return $data;
+// });
+
+Route::get('/four', function() {
+    // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
+    $tag_ids = [1, 2, 3];
+    $meals = [];
+    $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
+    foreach ($data as $d) {
+        array_push($meals, $d);
+    }
+
+    foreach ($meals as $meal) {
+        if($meal->tags->count() == count($tag_ids))
+        {
+            print_r($meal);
+        }
+    }
+    // return $data;
+});
+
+// Route::get('/four', function() {
+//     // meal::wherehas(‘tags’, function ($query) { $query->wherein(‘id’, $tags)});
+//     $meal = Meal::where('id', 4)->first();
+//     return $meal->tags->count();
 // });
