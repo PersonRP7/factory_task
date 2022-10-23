@@ -10,12 +10,21 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 // spatie sluggable
 
+// translatable
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+// translatable
+
 use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Ingredient;
 
-class Meal extends Model
+class Meal extends Model implements TranslatableContract
 {
+    // translatable
+    use Translatable;
+    // translatable
+
     use HasFactory;
     use HasSlug;
 
@@ -27,6 +36,9 @@ class Meal extends Model
     // protected $fillable = [
     //     'title', 'description', 'status', 'slug', 'deleted_at'
     // ]
+
+    public $translatedAttributes = ['title', 'description'];
+
     protected $fillable = [
         'title', 'description', 'status', 'deleted_at'
     ];
