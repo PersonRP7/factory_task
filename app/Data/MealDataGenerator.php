@@ -26,9 +26,6 @@ class MealDataGenerator
 
     public static function statusSetter($callable, $unixTimestamp)
     {
-        // call_user_func($callable, $unixTimestamp);
-        // return $callable($unixTimestamp);
-        // return call_user_func($callable, $unixTimestamp);
         $timeStamp = call_user_func($callable, $unixTimestamp);
         return $timeStamp;
     }
@@ -73,13 +70,6 @@ class MealDataGenerator
     {
         return Carbon::createFromTimestamp($unixTimestamp)->toDateTimeString(); 
     }
-
-    // public static function tagSplitter($request)
-    // {
-    //     // return $request->query('tags');
-    //     $tags = explode(',', $request->query('tags'));
-    //     return $tags;
-    // }
 
     // Splits a comma delimited string. Fetches tags / with
     public static function splitter($request, $stringData)
