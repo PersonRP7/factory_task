@@ -61,6 +61,48 @@ class MealDataGenerator
         //receive arg, return true or false;
     }
 
+    // 1493902343
+    // 1697902398
+    // public static function statusDecorator($instance, $queryParam)
+    // {
+    //     if ($queryParam == 'created')
+    //     {
+    //         return $instance->status;
+    //     }
+    //     if (ctype_digit($queryParam))
+    //     {
+    //         $carbonObject = Carbon::createFromTimestamp($queryParam);
+    //         $params = ["created_at", "updated_at", "deleted_at"];
+    //         foreach ($params as $param) {
+    //             foreach (Meal::all() as $meal) {
+    //                 if ($meal->$param > $carbonObject) {
+    //                     echo $meal;
+    //                     // Return this
+    //                 }
+    //             }
+    //         }       
+    //     }
+    // }
+
+    public static function statusDecorator($instance, $queryParam)
+    {
+        if ($queryParam == 'created')
+        {
+            return $instance->status;
+        }
+        if (ctype_digit($queryParam))
+        {
+            $carbonObject = Carbon::createFromTimestamp($queryParam);
+            $params = ["created_at", "updated_at", "deleted_at"];
+            foreach ($params as $param) {
+                
+                if ($instance->$param > $carbonObject) {
+                    return substr($param, 0, -3);
+                }
+                
+            }       
+        }
+    }
   
     public static function idDecorator($instance)
     {
@@ -117,6 +159,7 @@ class MealDataGenerator
         $meals = [];
         $meals_localized = [];
         $lang = MealDataGenerator::paramGetter($request, "lang");
+        $diffTime = MealDataGenerator::paramGetter($request, "diff_time");
         
         // foreach (MealDataGenerator::byTag($request) as $key) {
         //     array_push($meals, Meal::where('id', $key)->get());
@@ -130,6 +173,7 @@ class MealDataGenerator
                     "id" => MealDataGenerator::idDecorator($instance),
                     "title" => MealDataGenerator::langDecorator($instance, $lang, "title"),
                     "description" => MealDataGenerator::langDecorator($instance, $lang, "description"),
+                    "status" => MealDataGenerator::statusDecorator($instance, $diffTime),
                     "tags" => MealDataGenerator::mtmDecorator($instance->id, "tags"),
                     "ingredients" => MealDataGenerator::mtmDecorator($instance->id, "ingredients"),
                     "category" => MealDataGenerator::categoryDecorator($instance->id),
