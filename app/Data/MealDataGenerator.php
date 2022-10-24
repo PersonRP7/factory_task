@@ -67,9 +67,14 @@ class MealDataGenerator
         return $instance->id . " decorated";
     }
 
-    public static function langDecorator($instance, $lang)
+    //title and description
+    public static function langDecorator($instance, $lang, $field)
     {
-        
+        if (Language::where('code', $lang)->exists())
+        {
+            return $instance->$field . " {$lang}";
+        }
+        return $instance->$field;
     }
 
     #Many to many decorator
@@ -123,8 +128,8 @@ class MealDataGenerator
                 array_push($meals, [
                     // "id" => $instance->id,
                     "id" => MealDataGenerator::idDecorator($instance),
-                    "title" => $instance->title,
-                    "description" => $instance->description,
+                    "title" => MealDataGenerator::langDecorator($instance, $lang, "title"),
+                    "description" => MealDataGenerator::langDecorator($instance, $lang, "description"),
                     "tags" => MealDataGenerator::mtmDecorator($instance->id, "tags"),
                     "ingredients" => MealDataGenerator::mtmDecorator($instance->id, "ingredients"),
                     "category" => MealDataGenerator::categoryDecorator($instance->id),
