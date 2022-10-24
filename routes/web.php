@@ -154,3 +154,11 @@ Route::get('/two', function() {
 //     $meal = Meal::where('id', 4)->first();
 //     return $meal->tags->count();
 // });
+
+Route::get('/five/{rel}', function($rel) {
+    // $meal = Meal::where('id', 8)->first();
+    // if $meal->$rel->isEmpty()
+    // {
+    //     return "Relation is empty.";
+    // }
+});

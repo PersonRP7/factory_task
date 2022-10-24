@@ -150,13 +150,19 @@ class MealDataGenerator
                 ]);
             }
         }
-        print_r($meals);
+    
+        foreach($meals as &$item) {
+            unset($item['tags']);
+        }
+
+    return $meals;
+    // foreach ($meals as $key => $value) {
+    //     print_r($value);
+    //     foreach ($value as $v) {
+    //         print_r($v);
+    //     }
+    // }
       
-        
-        
-        
-        
-        
     }
 
 }
