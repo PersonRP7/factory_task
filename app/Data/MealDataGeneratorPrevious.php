@@ -56,6 +56,7 @@ class MealDataGenerator
                 foreach (Meal::all() as $meal) {
                     if ($meal->$param > $carbonObject) {
                         echo $meal;
+                        // Return this
                     }
                 }
             }       
