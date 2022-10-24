@@ -6,154 +6,70 @@ namespace App\Data;
 use App\Models\Meal;
 use Carbon\Carbon;
 
+// $tag_ids = [1,3,7,n];
+
+// $meal_id = 7;
+
+// $meals = Meal::query()
+
+// ->whereHas('tags', function ($query) use ($tag_ids ) {
+
+// $query->whereIn('id', $tag_ids );
+
+// }, count($tag_ids))
+
+// ->where('meal_id', $meal_id )
+
+// ->get()
+
+// ;
+
 class MealDataGenerator
 {
-   
-    //  Meal::whereDate('created_at', '<', $t1)->get();
+  
 
-    //unixTimestamp = 1493902343
-    //$cls = 'Meal'
-    //$time_stamp = 'created_at', 'updated_at', 'deleted_at'
-    public static function diffTimeComparison($unixTimestamp, $cls, $time_stamp)
+    public static function byTag($request)
     {
-        if (!ctype_digit($unixTimestamp))
-        {
-            return false;
-        }
-        $carbonObject = Carbon::createFromTimestamp($unixTimestamp);
-        return $cls::whereDate($time_stamp, '<', $carbonObject)->get();
-    }
 
-    public static function statusSetter($callable, $unixTimestamp)
-    {
-        $timeStamp = call_user_func($callable, $unixTimestamp);
-        return $timeStamp;
-    }
+        $tag_ids = explode(',', $request->query('tags'));
 
-    // public static function statusGetter($queryParam)
-    // {
-    //     if ($queryParam == 'created')
-    //     {
-    //         return Meal::whereNull('deleted_at')->get();
-    //     }
-    //     if ($queryParam == 'updated')
-    //     {
-    //         // return Meal::whereNot('created_at', '=', 'updated_at')->get();
-    //         return Meal::whereColumn('updated_at', '>', 'created_at')->get();
-    //     }
-    // }
-    public static function statusGetter($queryParam)
-    {
-        if ($queryParam == 'created')
-        {
-            return Meal::whereNull('deleted_at')->get();
-        }
-        if (ctype_digit($queryParam))
-        {
-            $carbonObject = Carbon::createFromTimestamp($queryParam);
-            $params = ["created_at", "updated_at", "deleted_at"];
-            foreach ($params as $param) {
-                foreach (Meal::all() as $meal) {
-                    if ($meal->$param > $carbonObject) {
-                        echo $meal;
-                    }
-                }
-            }       
-        }
-        // $carbonObject = Carbon::createFromTimestamp($unixTimestamp);
-        // return $cls::whereDate($time_stamp, '<', $carbonObject)->get();   
-    }
-
-    // 1493902343
-    // 1697902398
-    public static function getStrFromUnixT($unixTimestamp)
-    {
-        return Carbon::createFromTimestamp($unixTimestamp)->toDateTimeString(); 
-    }
-
-    // Splits a comma delimited string. Fetches tags / with
-    // public static function splitter($request, $stringData)
-    // {
-    //     return explode(',', $stringData);
-    // }
-    public static function splitter($request, $stringData)
-    {
-        return explode(',', $request->query($stringData));
-    }
-
-    public static function paramGetter($request, $name)
-    {
-        return $request->query($name);
-    }
-
-    #returns only one Meal object.
-    public static function scopeByTag($ids)
-    {
-        $query = Meal::whereHas('tags', function($query) use ($ids) {$query->where('tag_id', $ids);});
-        foreach ($ids as $id) {
-            $query->whereHas('tags', fn ($query) => $query->where('tag_id', $id));
-        }
-        return $query->first();
-    }
-
-    // public static function getByTag($request)
-    // {
-    //     $tag_ids = explode(',', $request->query('tags'));;
-    //     $meals = [];
-    //     $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
-    //     foreach ($data as $d) {
-    //         array_push($meals, $d);
-    //     }
-    
-    //     foreach ($meals as $meal) {
-    //         if($meal->tags->count() == count($tag_ids))
-    //         {
-    //             return $meal;
-    //         }
-    //     }
-    // }
-
-    public static function getByTag($request, $lang, $diffTime)
-    {
-        $tag_ids = explode(',', $request->query('tags'));;
+        //meals holds the Meal item keys
         $meals = [];
-        $data = Meal::wherehas('tags', function ($query) use($tag_ids) {$query->wherein('tag_id', $tag_ids);})->get();
-        foreach ($data as $d) {
-            $d->title = $d->title . " na " . $lang . " jeziku ";
-            $d->description = $d->description . " na " . $lang . " jeziku ";
-            array_push($meals, $d);
-            // array_push($meals, $diffTime);
+        //meals holds the Meal item keys
+
+        $meal_ids_duplicates = [];
+        $data = [];
+        
+        foreach ($tag_ids as $id) {
+            $res = Meal::whereHas('tags', function($query) use ($id) {$query->where('tag_id', $id);})->first();
+            array_push($meals, $res);
         }
-    
+        // return $meals;
         foreach ($meals as $meal) {
-            if($meal->tags->count() == count($tag_ids))
-            {
-                return $meal;
-                // return $diffTime;
-            }
+            array_push($meal_ids_duplicates, $meal->id);
         }
+        $meals_unique = array_unique($meal_ids_duplicates);
+        
+        foreach ($meals_unique as $key) {
+            $data_loop = Meal::query()
+
+            ->whereHas('tags', function ($query) use ($tag_ids, $key ) {
+
+            $query->whereIn('tag_id', $tag_ids );
+            }, count($tag_ids))
+            ->where('id', $key )
+            ->get();
+            array_push($data, $key);
+        }
+        return $data;
     }
 
     public static function main($request)
     {
-        $lang = MealDataGenerator::paramGetter($request, "lang");
-        $tags = MealDataGenerator::splitter($request, "tags");
-        $diffTime = $request->query("diff_time");
-        $meals = MealDataGenerator::getByTag($request, $lang, $diffTime);
-        // return $meals;
-        // return $meals->toJson();
-        return $meals;
-    
+
+        return MealDataGenerator::byTag($request);
+        // return "Hello World";
+        
     }
 
-    #per_page, page, category, tags, with, lang*, diff_time
-    // public static function main($request)
-    // {
-    //     $lang = MealDataGenerator::paramGetter($request, "lang");
-    //     $tags = MealDataGenerator::splitter($request, "tags");
-    //     foreach ($tags as $tag) {
-    //         echo $tag;
-    //     }
-    //     echo $lang;
-    // }
 }
