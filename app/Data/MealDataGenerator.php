@@ -111,6 +111,22 @@ class MealDataGenerator
         return $instance->id . " decorated";
     }
 
+    #Many to many decorator
+    public static function mtmDecorator($id, $relation)
+    {
+        $mtmArray = [];
+        // $meal = Meal::first();
+        $data = Meal::where('id', $id)->first();
+        foreach ($data->$relation as $rel) {
+            array_push($mtmArray, [
+                "id" => $rel->id,
+                "title" => $rel->title,
+                "slug" => $rel->slug
+            ]);
+        }
+        return $mtmArray;
+    }
+
     public static function tagDecorator($id)
     {
         $tagArray = [];
@@ -146,14 +162,16 @@ class MealDataGenerator
                     "title" => $instance->title,
                     "description" => $instance->description,
                     // "tags" => array("key" => "value")
-                    "tags" => MealDataGenerator::tagDecorator($instance->id)
+                    // "tags" => MealDataGenerator::tagDecorator($instance->id)
+                    "tags" => MealDataGenerator::mtmDecorator($instance->id, "tags"),
+                    "ingredients" => MealDataGenerator::mtmDecorator($instance->id, "ingredients"),
                 ]);
             }
         }
     
-        foreach($meals as &$item) {
-            unset($item['tags']);
-        }
+        // foreach($meals as &$item) {
+        //     unset($item['tags']);
+        // }
 
     return $meals;
     // foreach ($meals as $key => $value) {
