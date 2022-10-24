@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         // factory(App\Meal::class, 2)->create();
 
         // \App\Models\Meal::factory(2)->create();
-        // \App\Models\Language::factory(5)->create();
-        \App\Models\Meal::factory(5)->create();
+        \App\Models\Language::factory(5)->create();
+        // \App\Models\Meal::factory(5)->create();
     }
 }

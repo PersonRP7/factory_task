@@ -17,7 +17,8 @@ class LanguageFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->name()
+            // 'code' => $this->faker->name()
+            'code' => $this->faker->cityPrefix()
         ];
     }
 }

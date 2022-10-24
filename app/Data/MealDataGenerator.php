@@ -8,24 +8,8 @@ use Carbon\Carbon;
 use App\Models\Ingredients;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Language;
 
-// $tag_ids = [1,3,7,n];
-
-// $meal_id = 7;
-
-// $meals = Meal::query()
-
-// ->whereHas('tags', function ($query) use ($tag_ids ) {
-
-// $query->whereIn('id', $tag_ids );
-
-// }, count($tag_ids))
-
-// ->where('meal_id', $meal_id )
-
-// ->get()
-
-// ;
 
 class MealDataGenerator
 {
@@ -81,6 +65,11 @@ class MealDataGenerator
     public static function idDecorator($instance)
     {
         return $instance->id . " decorated";
+    }
+
+    public static function langDecorator($instance, $lang)
+    {
+        
     }
 
     #Many to many decorator
