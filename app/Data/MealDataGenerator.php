@@ -5,6 +5,9 @@ namespace App\Data;
 
 use App\Models\Meal;
 use Carbon\Carbon;
+use App\Models\Ingredients;
+use App\Models\Tag;
+use App\Models\Category;
 
 // $tag_ids = [1,3,7,n];
 
@@ -64,11 +67,95 @@ class MealDataGenerator
         return $data;
     }
 
+    public static function paramGetter($request, $name)
+    {
+        return $request->query($name);
+    }
+
+    public static function byDiffTime($request)
+    {
+        //receive arg, return true or false;
+    }
+
+    // public static function main($request)
+    // {
+
+    //     $meals = [];
+    //     $meals_localized = [];
+    //     $lang = MealDataGenerator::paramGetter($request, "lang");
+        
+    //     foreach (MealDataGenerator::byTag($request) as $key) {
+    //         array_push($meals, Meal::where('id', $key)->get());
+    //     }
+        
+    //     foreach ($meals as $key) {
+    //         foreach ($key as $k) {
+    //             $k->title = $k->title . $lang;
+    //             $k->description = $k->description . $lang;
+    //             ///////
+    //             // if ($k->status == "created")
+    //             if($k->title == 'meal1de')
+    //             {
+    //                 $k->title = "MEAL CHANGED";
+    //             }
+    //             ///////
+    //         }
+    //        echo $key->toJson();
+    //     }
+        
+        
+    // }
+
+    public static function idDecorator($instance)
+    {
+        return $instance->id . " decorated";
+    }
+
+    public static function tagDecorator($id)
+    {
+        $tagArray = [];
+        // $meal = Meal::first();
+        $meal = Meal::where('id', $id)->first();
+        foreach ($meal->tags as $tag) {
+            array_push($tagArray, [
+                "id" => $tag->id,
+                "title" => $tag->title,
+                "slug" => $tag->slug
+            ]);
+        }
+        return $tagArray;
+    }
+
     public static function main($request)
     {
 
-        return MealDataGenerator::byTag($request);
-        // return "Hello World";
+        $meals = [];
+        $meals_localized = [];
+        $lang = MealDataGenerator::paramGetter($request, "lang");
+        
+        // foreach (MealDataGenerator::byTag($request) as $key) {
+        //     array_push($meals, Meal::where('id', $key)->get());
+        // }
+        foreach (MealDataGenerator::byTag($request) as $key) {
+            // array_push($meals, Meal::where('id', $key)->get());
+            foreach (Meal::where('id', $key)->get() as $instance) {
+                // array_push($meals, $instance->title);
+                array_push($meals, [
+                    // "id" => $instance->id,
+                    "id" => MealDataGenerator::idDecorator($instance),
+                    "title" => $instance->title,
+                    "description" => $instance->description,
+                    // "tags" => array("key" => "value")
+                    "tags" => MealDataGenerator::tagDecorator($instance->id)
+                ]);
+            }
+        }
+        print_r($meals);
+      
+        
+        
+        
+        
         
     }
 
