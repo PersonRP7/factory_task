@@ -136,8 +136,6 @@ class MealDataGenerator
                     "id" => MealDataGenerator::idDecorator($instance),
                     "title" => $instance->title,
                     "description" => $instance->description,
-                    // "tags" => array("key" => "value")
-                    // "tags" => MealDataGenerator::tagDecorator($instance->id)
                     "tags" => MealDataGenerator::mtmDecorator($instance->id, "tags"),
                     "ingredients" => MealDataGenerator::mtmDecorator($instance->id, "ingredients"),
                     "category" => MealDataGenerator::categoryDecorator($instance->id),
