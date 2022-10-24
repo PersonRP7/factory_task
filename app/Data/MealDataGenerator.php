@@ -77,35 +77,7 @@ class MealDataGenerator
         //receive arg, return true or false;
     }
 
-    // public static function main($request)
-    // {
-
-    //     $meals = [];
-    //     $meals_localized = [];
-    //     $lang = MealDataGenerator::paramGetter($request, "lang");
-        
-    //     foreach (MealDataGenerator::byTag($request) as $key) {
-    //         array_push($meals, Meal::where('id', $key)->get());
-    //     }
-        
-    //     foreach ($meals as $key) {
-    //         foreach ($key as $k) {
-    //             $k->title = $k->title . $lang;
-    //             $k->description = $k->description . $lang;
-    //             ///////
-    //             // if ($k->status == "created")
-    //             if($k->title == 'meal1de')
-    //             {
-    //                 $k->title = "MEAL CHANGED";
-    //             }
-    //             ///////
-    //         }
-    //        echo $key->toJson();
-    //     }
-        
-        
-    // }
-
+  
     public static function idDecorator($instance)
     {
         return $instance->id . " decorated";
@@ -127,20 +99,23 @@ class MealDataGenerator
         return $mtmArray;
     }
 
-    public static function tagDecorator($id)
+
+    public static function categoryDecorator($id)
     {
-        $tagArray = [];
-        // $meal = Meal::first();
+        $categoryArray = [];
         $meal = Meal::where('id', $id)->first();
-        foreach ($meal->tags as $tag) {
-            array_push($tagArray, [
-                "id" => $tag->id,
-                "title" => $tag->title,
-                "slug" => $tag->slug
+
+        if ($meal->category == null)
+        {return null;}
+            array_push($categoryArray, [
+                "id" => $meal->category->id,
+                "title" => $meal->category->title,
+                "slug" => $meal->category->slug,
             ]);
-        }
-        return $tagArray;
+
+        return $categoryArray;
     }
+
 
     public static function main($request)
     {
@@ -165,6 +140,7 @@ class MealDataGenerator
                     // "tags" => MealDataGenerator::tagDecorator($instance->id)
                     "tags" => MealDataGenerator::mtmDecorator($instance->id, "tags"),
                     "ingredients" => MealDataGenerator::mtmDecorator($instance->id, "ingredients"),
+                    "category" => MealDataGenerator::categoryDecorator($instance->id),
                 ]);
             }
         }
@@ -174,12 +150,7 @@ class MealDataGenerator
         // }
 
     return $meals;
-    // foreach ($meals as $key => $value) {
-    //     print_r($value);
-    //     foreach ($value as $v) {
-    //         print_r($v);
-    //     }
-    // }
+
       
     }
 
