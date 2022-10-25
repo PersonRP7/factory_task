@@ -154,6 +154,31 @@ class MealDataGenerator
         return $categoryArray;
     }
 
+    #unsets array keys of related objects
+    #not specified in the with parameter.
+    // public static function unSetter($parameter, $request, $meals)
+    // {
+    //     $withs = explode(',', $request->query('with'));
+
+    //     foreach($meals as &$item) {
+    //         if (!in_array($parameter, $withs)) {
+    //             unset($meals[$parameter]);
+    //         }
+    //     }
+    // }
+
+
+    // public static function unSetter($parameter, $request, $meals)
+    // {
+    //     $withs = explode(',', $request->query('with'));
+    //     if (!in_array($parameter, $withs)) {
+    //         foreach($meals as &$item) {
+                
+    //             unset($meals[$parameter]);
+    //         }
+    //     }
+        
+    // }
 
     public static function main($request)
     {
@@ -192,6 +217,27 @@ class MealDataGenerator
             "meta" => MealDataGenerator::metaMaker($request)
             ]);
         // meta array
+
+    // unset unspecified tags
+
+
+        // foreach($meals as &$item) {
+        //     unset($item['ingredients']);
+        // }
+
+        $withs = explode(",", $request->query("with"));
+        $options = ["ingredients", "category", "tags"];
+        // return $withs;
+        foreach ($withs as $with) {
+            foreach ($options as $option) {
+                foreach ($meals as &$meal) {
+                    if(!in_array($option, $withs))
+                    {
+                        unset($meal[$option]);
+                    }
+                }
+            }
+        }
 
     return $meals;
     // return count(MealDataGenerator::byTag($request));

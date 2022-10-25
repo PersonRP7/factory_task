@@ -187,3 +187,12 @@ Route::get('six/', function(Request $request) {
     // MealDataGenerator::main($request);
     return $request->query('per_page');
 });
+
+Route::get('seven/', function(Request $request) {
+    // $tag_ids = explode(',', $request->query('with'));
+    $withs = explode(',', $request->query('with'));
+    echo print_r($tag_ids);
+    if (!in_array("number", $withs)) {
+        echo "BB is not found";
+    }
+});
