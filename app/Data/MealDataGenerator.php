@@ -63,26 +63,6 @@ class MealDataGenerator
 
     // 1493902343
     // 1697902398
-    // public static function statusDecorator($instance, $queryParam)
-    // {
-    //     if ($queryParam == 'created')
-    //     {
-    //         return $instance->status;
-    //     }
-    //     if (ctype_digit($queryParam))
-    //     {
-    //         $carbonObject = Carbon::createFromTimestamp($queryParam);
-    //         $params = ["created_at", "updated_at", "deleted_at"];
-    //         foreach ($params as $param) {
-    //             foreach (Meal::all() as $meal) {
-    //                 if ($meal->$param > $carbonObject) {
-    //                     echo $meal;
-    //                     // Return this
-    //                 }
-    //             }
-    //         }       
-    //     }
-    // }
 
     public static function statusDecorator($instance, $queryParam)
     {

@@ -162,3 +162,11 @@ Route::get('/five/{rel}', function($rel) {
     //     return "Relation is empty.";
     // }
 });
+
+use Illuminate\Http\Request;
+
+Route::get('six/', function(Request $request) {
+    // return $request->getQueryString();
+    // return $request->query();
+    return $request->getRequestUri();
+});
