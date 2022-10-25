@@ -163,10 +163,18 @@ Route::get('/five/{rel}', function($rel) {
     // }
 });
 
+// use Illuminate\Http\Request;
+
+// Route::get('six/', function(Request $request) {
+//     return $request->root() . $request->getRequestUri();
+// });
+
 use Illuminate\Http\Request;
+use App\Data\MealDataGenerator;
 
 Route::get('six/', function(Request $request) {
-    // return $request->getQueryString();
-    // return $request->query();
-    return $request->getRequestUri();
+    $links = [];
+    $self = $request->root() . $request->getRequestUri();
+    $current_page = $request->query('');
+    MealDataGenerator::main($request);
 });
