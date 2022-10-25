@@ -115,16 +115,25 @@ class MealDataGenerator
         return $mtmArray;
     }
 
+    public static function totalPagesGetter($request)
+    {
+        $totalItems = count(MealDataGenerator::byTag($request));
+        $perPage = MealDataGenerator::paramGetter($request, "per_page");
+        $totalPages = floor(($totalItems + $perPage - 1) / $perPage);
+        return $totalPages;
+    }
+
     public static function metaMaker($request)
     {
         $meta = [];
         $totalItems = count(MealDataGenerator::byTag($request));
         $perPage = MealDataGenerator::paramGetter($request, "per_page");
-        $totalPages = floor(($totalItems + $perPage - 1) / $perPage);
+        // $totalPages = floor(($totalItems + $perPage - 1) / $perPage);
         array_push($meta, [
             "total_items"=> $totalItems,
             "per_page" => $perPage,
-            "total_pages" => $totalPages
+            // "total_pages" => $totalPages
+            "total_pages" => MealDataGenerator::totalPagesGetter($request)
         ]);
         return $meta;
     }
@@ -177,7 +186,8 @@ class MealDataGenerator
         // foreach($meals as &$item) {
         //     unset($item['tags']);
         // }
-         // meta array
+
+        // meta array
          array_push($meals, [
             "meta" => MealDataGenerator::metaMaker($request)
             ]);

@@ -172,6 +172,14 @@ Route::get('/five/{rel}', function($rel) {
 use Illuminate\Http\Request;
 use App\Data\MealDataGenerator;
 
+// Route::get('six/', function(Request $request) {
+//     $links = [];
+//     $self = $request->root() . $request->getRequestUri();
+//     // $current_page = $request->query('');
+//     // MealDataGenerator::main($request);
+//     return $request->query('per_page');
+// });
+
 Route::get('six/', function(Request $request) {
     $links = [];
     $self = $request->root() . $request->getRequestUri();
