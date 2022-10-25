@@ -175,6 +175,7 @@ use App\Data\MealDataGenerator;
 Route::get('six/', function(Request $request) {
     $links = [];
     $self = $request->root() . $request->getRequestUri();
-    $current_page = $request->query('');
-    MealDataGenerator::main($request);
+    // $current_page = $request->query('');
+    // MealDataGenerator::main($request);
+    return $request->query('per_page');
 });
