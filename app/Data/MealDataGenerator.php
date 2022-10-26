@@ -63,7 +63,7 @@ class MealDataGenerator
         //the diff_time parameter.
         $diff_time = $request->query("diff_time");
         $ids = [];
-        if ( isset($diffTime) ) {
+        if ( isset($diff_time) ) {
             $carbonObject = Carbon::createFromTimestamp($diff_time);
             foreach (Meal::all() as $meal) {
                 if ($meal->updated_at > $carbonObject) {
