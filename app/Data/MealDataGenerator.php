@@ -22,7 +22,6 @@ class MealDataGenerator
 
         //meals holds the Meal item keys
         $meals = [];
-        //meals holds the Meal item keys
 
         $meal_ids_duplicates = [];
         $data = [];
