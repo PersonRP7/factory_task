@@ -17,6 +17,7 @@ class MealDataGenerator
 
     public static function byTag($request)
     {
+        // Get only the objects which have all the specified tags.
 
         $tag_ids = explode(',', $request->query('tags'));
 
@@ -58,6 +59,8 @@ class MealDataGenerator
 
     public static function byDiffTime($request)
     {
+        //Used in main to get objects either by tag or by itself, depending on
+        //the diff_time parameter.
         $diff_time = $request->query("diff_time");
         $ids = [];
         if ( isset($diffTime) ) {
@@ -99,8 +102,9 @@ class MealDataGenerator
         return $instance->id . " decorated";
     }
 
-    //title and description
+    
     public static function langDecorator($instance, $lang, $field)
+    //title and description
     {
         if (Language::where('code', $lang)->exists())
         {
@@ -109,8 +113,9 @@ class MealDataGenerator
         return $instance->$field;
     }
 
-    #Many to many decorator
+    
     public static function mtmDecorator($id, $relation)
+    #Many to many decorator
     {
         $mtmArray = [];
         // $meal = Meal::first();
@@ -201,6 +206,7 @@ class MealDataGenerator
 
     public static function unSetter($request, $meals)
     {
+        //Removes relation(s) not present in the query string.
         $withs = explode(",", $request->query("with"));
         $options = ["ingredients", "category", "tags"];
         // return $withs;
