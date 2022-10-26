@@ -80,19 +80,34 @@ class MealDataGenerator
     //         }
     //     }
 
+    // public static function byDiffTime($request)
+    // {
+        // $ids = [];
+        // $diff_time = $request->query("diff_time");
+        // $carbonObject = Carbon::createFromTimestamp($diff_time);
+        // foreach (Meal::all() as $meal) {
+        //     if ($meal->updated_at > $carbonObject) {
+        //         array_push($ids, $meal->id);
+        //     }
+        // }
+        // return $ids;
+    // }
+
     public static function byDiffTime($request)
     {
-        $ids = [];
         $diff_time = $request->query("diff_time");
-        $carbonObject = Carbon::createFromTimestamp($diff_time);
-        foreach (Meal::all() as $meal) {
-            if ($meal->updated_at > $carbonObject) {
-                array_push($ids, $meal->id);
+        $ids = [];
+        if ( isset($diffTime) ) {
+            $carbonObject = Carbon::createFromTimestamp($diff_time);
+            foreach (Meal::all() as $meal) {
+                if ($meal->updated_at > $carbonObject) {
+                    array_push($ids, $meal->id);
+                }
             }
+            return $ids;    
         }
-        return $ids;
+        return MealDataGenerator::byTag($request);
     }
-
     // 1493902343
     // 1697902398
 
