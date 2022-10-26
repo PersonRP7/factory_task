@@ -141,8 +141,6 @@ class MealDataGenerator
         $tags = MealDataGenerator::splitter($request, "tags");
         $diffTime = $request->query("diff_time");
         $meals = MealDataGenerator::getByTag($request, $lang, $diffTime);
-        // return $meals;
-        // return $meals->toJson();
         return $meals;
     
     }
