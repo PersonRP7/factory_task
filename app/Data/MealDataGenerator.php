@@ -56,24 +56,6 @@ class MealDataGenerator
         return $request->query($name);
     }
 
-
-    // public static function byDiffTime($request)
-    // {
-    //     //Used in main to get objects either by tag or by itself, depending on
-    //     //the diff_time parameter.
-    //     $diff_time = $request->query("diff_time");
-    //     $ids = [];
-    //     if ( isset($diff_time) ) {
-    //         $carbonObject = Carbon::createFromTimestamp($diff_time);
-    //         foreach (Meal::all() as $meal) {
-    //             if ($meal->updated_at > $carbonObject) {
-    //                 array_push($ids, $meal->id);
-    //             }
-    //         }
-    //         return $ids;    
-    //     }
-    //     return MealDataGenerator::byTag($request);
-    // }
     // 1493902343
     // 1697902398
 
