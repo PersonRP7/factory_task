@@ -57,6 +57,26 @@ class MealDataGenerator
     }
 
 
+    // public static function byDiffTime($request)
+    // {
+    //     //Used in main to get objects either by tag or by itself, depending on
+    //     //the diff_time parameter.
+    //     $diff_time = $request->query("diff_time");
+    //     $ids = [];
+    //     if ( isset($diff_time) ) {
+    //         $carbonObject = Carbon::createFromTimestamp($diff_time);
+    //         foreach (Meal::all() as $meal) {
+    //             if ($meal->updated_at > $carbonObject) {
+    //                 array_push($ids, $meal->id);
+    //             }
+    //         }
+    //         return $ids;    
+    //     }
+    //     return MealDataGenerator::byTag($request);
+    // }
+    // 1493902343
+    // 1697902398
+
     public static function byDiffTime($request)
     {
         //Used in main to get objects either by tag or by itself, depending on
@@ -65,17 +85,15 @@ class MealDataGenerator
         $ids = [];
         if ( isset($diff_time) ) {
             $carbonObject = Carbon::createFromTimestamp($diff_time);
-            foreach (Meal::all() as $meal) {
-                if ($meal->updated_at > $carbonObject) {
-                    array_push($ids, $meal->id);
+            foreach (MealDataGenerator::byTag($request) as $id) {
+                if (Meal::where('id', $id)->first()->updated_at > $carbonObject) {
+                    array_push($ids, $id);
                 }
             }
             return $ids;    
         }
         return MealDataGenerator::byTag($request);
     }
-    // 1493902343
-    // 1697902398
 
     public static function statusDecorator($instance, $queryParam)
     {
