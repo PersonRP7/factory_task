@@ -55,31 +55,43 @@ class MealDataGenerator
         return $request->query($name);
     }
 
+    // public static function byDiffTime($request)
+    // {
+    //     $meals = [];
+        
+    //     $diff_time = $request->query("diff_time");
+    //     if (isset($diff_time))
+    //         {
+    //             if(!ctype_digit($request->query('diff_time')))
+    //             {
+    //                 return MealDataGenerator::byTag($request);
+    //             }else{
+    //                 $carbonObject = Carbon::createFromTimestamp($diff_time);
+    //                 // return Meal::whereDate('updated_at', '<', $carbonObject)->get();
+    //                 foreach (Meal::all() as $meal) {
+    //                     if ($meal->updated_at > $diff_time)
+    //                     {
+    //                         array_push($meals, $meal->id);
+    //                     }else{
+    //                         return MealDataGenerator::byTag($request);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
     public static function byDiffTime($request)
     {
-        $meals = [];
-        
+        $ids = [];
         $diff_time = $request->query("diff_time");
-        if (isset($diff_time))
-            {
-                if(!ctype_digit($request->query('diff_time')))
-                {
-                    return MealDataGenerator::byTag($request);
-                }else{
-                    $carbonObject = Carbon::createFromTimestamp($diff_time);
-                    // return Meal::whereDate('updated_at', '<', $carbonObject)->get();
-                    foreach (Meal::all() as $meal) {
-                        if ($meal->updated_at > $diff_time)
-                        {
-                            array_push($meals, $meal->id);
-                        }else{
-                            return MealDataGenerator::byTag($request);
-                        }
-                    }
-                }
+        $carbonObject = Carbon::createFromTimestamp($diff_time);
+        foreach (Meal::all() as $meal) {
+            if ($meal->updated_at > $carbonObject) {
+                array_push($ids, $meal->id);
             }
         }
-
+        return $ids;
+    }
 
     // 1493902343
     // 1697902398
@@ -234,7 +246,8 @@ class MealDataGenerator
         $lang = MealDataGenerator::paramGetter($request, "lang");
         $diffTime = MealDataGenerator::paramGetter($request, "diff_time");
         
-        foreach (MealDataGenerator::byTag($request) as $key) {
+        // foreach (MealDataGenerator::byTag($request) as $key) {
+        foreach(MealDataGenerator::byDiffTime($request) as $key){
          
             foreach (Meal::where('id', $key)->get() as $instance) {
                 
