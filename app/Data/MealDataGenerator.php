@@ -124,51 +124,6 @@ class MealDataGenerator
     }
 
 
-    // public static function linkMaker($request)
-    // {
-    //     $links = [];
-    //     $self = $request->root() . $request->getRequestUri();
-    //     $totalPages = MealDataGenerator::totalPagesGetter($request);
-    //     $currentPage = $request->query('page');
-
-        
-    //     // $previous = $currentPage - 1;
-    //     // if($previous == 0)
-    //     // {
-    //     //     $previous = null;
-    //     // }
-    //     // $next = $currentPage + 1;
-    //     // if($next > $totalPages)
-    //     // {
-    //     //     $next = null;
-    //     // } 
-    //     $previous = $currentPage - 1;
-    //     $previous = str_replace("&page=", "&page={$previous}", $self);
-    //     if($previous == 0)
-    //     {
-    //         $previous = null;
-    //         $previous = str_replace("&page=", "&page={$previous}", $self);
-    //     }
-    //     $next = $currentPage + 1;
-    //     $next = str_replace("&page=", "&page={$next}", $self);
-    //     if($next > $totalPages)
-    //     {
-    //         $next = null;
-    //         $next = str_replace("&page=", "&page={$next}", $self);
-    //     } 
-        
-    //     array_push($links, [
-    //         "self" => $self,
-    //         "next" => $next,
-    //         "previous" => $previous
-    //     ]);
-    //     return $links;
-    // }
-
-    public static function getLinkString($request)
-    {
-        return "";
-    }
 
     public static function linkMaker($request)
     {
@@ -259,13 +214,10 @@ class MealDataGenerator
         $lang = MealDataGenerator::paramGetter($request, "lang");
         $diffTime = MealDataGenerator::paramGetter($request, "diff_time");
         
-        // foreach (MealDataGenerator::byTag($request) as $key) {
-        //     array_push($meals, Meal::where('id', $key)->get());
-        // }
         foreach (MealDataGenerator::byTag($request) as $key) {
-            // array_push($meals, Meal::where('id', $key)->get());
+         
             foreach (Meal::where('id', $key)->get() as $instance) {
-                // array_push($meals, $instance->title);
+                
                 array_push($meals, [
                     // "id" => $instance->id,
                     "id" => MealDataGenerator::idDecorator($instance),
