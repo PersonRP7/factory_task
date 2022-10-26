@@ -18,26 +18,3 @@ use App\Http\Controllers\MealController;
 
 Route::resource('/', MealController::class);
 
-use App\Models\Meal;
-use App\Models\Tag;
-
-
-use Illuminate\Http\Request;
-use App\Data\MealDataGenerator;
-use Carbon\Carbon;
-
-Route::any('/ten', function (Request $request) {
-    // return $request->query('diff_time');
-    $ids = [];
-    $diff_time = $request->query("diff_time");
-    $carbonObject = Carbon::createFromTimestamp($diff_time);
-    foreach (Meal::all() as $meal) {
-        if ($meal->updated_at > $carbonObject) {
-            array_push($ids, $meal->id);
-        }
-    }
-    return $ids;
-});
-
-
-
