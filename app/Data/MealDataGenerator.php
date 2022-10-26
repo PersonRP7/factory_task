@@ -123,6 +123,85 @@ class MealDataGenerator
         return $totalPages;
     }
 
+
+    // public static function linkMaker($request)
+    // {
+    //     $links = [];
+    //     $self = $request->root() . $request->getRequestUri();
+    //     $totalPages = MealDataGenerator::totalPagesGetter($request);
+    //     $currentPage = $request->query('page');
+
+        
+    //     // $previous = $currentPage - 1;
+    //     // if($previous == 0)
+    //     // {
+    //     //     $previous = null;
+    //     // }
+    //     // $next = $currentPage + 1;
+    //     // if($next > $totalPages)
+    //     // {
+    //     //     $next = null;
+    //     // } 
+    //     $previous = $currentPage - 1;
+    //     $previous = str_replace("&page=", "&page={$previous}", $self);
+    //     if($previous == 0)
+    //     {
+    //         $previous = null;
+    //         $previous = str_replace("&page=", "&page={$previous}", $self);
+    //     }
+    //     $next = $currentPage + 1;
+    //     $next = str_replace("&page=", "&page={$next}", $self);
+    //     if($next > $totalPages)
+    //     {
+    //         $next = null;
+    //         $next = str_replace("&page=", "&page={$next}", $self);
+    //     } 
+        
+    //     array_push($links, [
+    //         "self" => $self,
+    //         "next" => $next,
+    //         "previous" => $previous
+    //     ]);
+    //     return $links;
+    // }
+
+    public static function getLinkString($request)
+    {
+        return "";
+    }
+
+    public static function linkMaker($request)
+    {
+        $links = [];
+        $self = $request->root() . $request->getRequestUri();
+        $totalPages = MealDataGenerator::totalPagesGetter($request);
+        $currentPage = $request->query('page');
+
+
+        $previous = $currentPage - 1;
+        $previous = str_replace("&page={$currentPage}", "&page={$previous}", $self);
+        if($previous == 0)
+        {
+            $previous = null;
+            $previous = str_replace("&page={$currentPage}", "&page={$previous}", $self);
+        }
+        $next = $currentPage + 1;
+        $next = str_replace("&page={$currentPage}", "&page={$next}", $self);
+        if($next > $totalPages)
+        {
+            $next = null;
+            $next = str_replace("&page=", "&page={$next}", $self);
+        } 
+        
+        
+        array_push($links, [
+            "self" => $self,
+            "next" => $next,
+            "previous" => $previous
+        ]);
+        return $links;
+    }
+
     public static function metaMaker($request)
     {
         $meta = [];
@@ -154,31 +233,23 @@ class MealDataGenerator
         return $categoryArray;
     }
 
-    #unsets array keys of related objects
-    #not specified in the with parameter.
-    // public static function unSetter($parameter, $request, $meals)
-    // {
-    //     $withs = explode(',', $request->query('with'));
 
-    //     foreach($meals as &$item) {
-    //         if (!in_array($parameter, $withs)) {
-    //             unset($meals[$parameter]);
-    //         }
-    //     }
-    // }
-
-
-    // public static function unSetter($parameter, $request, $meals)
-    // {
-    //     $withs = explode(',', $request->query('with'));
-    //     if (!in_array($parameter, $withs)) {
-    //         foreach($meals as &$item) {
-                
-    //             unset($meals[$parameter]);
-    //         }
-    //     }
-        
-    // }
+    public static function unSetter($request, $meals)
+    {
+        $withs = explode(",", $request->query("with"));
+        $options = ["ingredients", "category", "tags"];
+        // return $withs;
+        foreach ($withs as $with) {
+            foreach ($options as $option) {
+                foreach ($meals as &$meal) {
+                    if(!in_array($option, $withs))
+                    {
+                        unset($meal[$option]);
+                    }
+                }
+            }
+        }
+    }
 
     public static function main($request)
     {
@@ -216,10 +287,12 @@ class MealDataGenerator
          array_push($meals, [
             "meta" => MealDataGenerator::metaMaker($request)
             ]);
-        // meta array
 
-    // unset unspecified tags
 
+        //links array
+        array_push($meals, [
+            "links" => MealDataGenerator::linkMaker($request)
+            ]);
 
         // foreach($meals as &$item) {
         //     unset($item['ingredients']);
@@ -227,7 +300,7 @@ class MealDataGenerator
 
         $withs = explode(",", $request->query("with"));
         $options = ["ingredients", "category", "tags"];
-        // return $withs;
+
         foreach ($withs as $with) {
             foreach ($options as $option) {
                 foreach ($meals as &$meal) {

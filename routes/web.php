@@ -196,3 +196,34 @@ Route::get('seven/', function(Request $request) {
         echo "BB is not found";
     }
 });
+
+// Route::get('eight/', function(Request $request){
+//     $vals = []
+//     $current_page = $request->query("current_page");
+//     $total_pages = 5;
+//     if($current_page != 1 and $current_page < $total_pages)
+//     {
+//         $previous = $current_page - 1;
+//         $next = $current_page + 1
+
+//     }elseif ($current_page == 1 and $current_page < $total_pages) {
+//         $previous = null;
+//         $next = $current_page + 1
+//     }elseif ($current_page == 1 and $total_pages == 1) {
+//         $previous = null;
+//         $next = null;
+//     }
+
+//     return $vals;
+// });
+
+Route::get('/nine', function(Request $request) {
+   $original =  $request->root() . $request->getRequestUri();
+   $page = $request->query('page');
+   $expression = 2 + 2;
+   $str_part = "page=";
+   $str_part_expression = $str_part . $expression;
+   $r = str_replace("page={$page}", $str_part_expression, $original); 
+//    return $original;
+   return $r;
+});
