@@ -16,7 +16,8 @@ class MealController extends Controller
      */
     public function index(Request $request)
     {
-        return MealDataGenerator::main($request);
+        // return MealDataGenerator::main($request);
+        return MealDataGenerator::mainHandler($request);
     }
 
     /**

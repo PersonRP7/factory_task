@@ -10,6 +10,7 @@ use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Language;
 
+use App\Data\ErrorHandler;
 
 class MealDataGenerator
 {
@@ -284,6 +285,12 @@ class MealDataGenerator
     return $meals;
     // return count(MealDataGenerator::byTag($request));
       
+    }
+
+
+    public static function mainHandler($request)
+    {
+        return ErrorHandler::generic(self::main($request), $request);
     }
 
 }

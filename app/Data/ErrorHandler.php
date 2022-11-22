@@ -1,9 +1,10 @@
 <?php
+namespace App\Data;
 
 class ErrorHandler
 {
-    public static function generic($function)
+    public static function generic($function, $request)
     {
-        return $function();
+        return $function($request);
     }
 }
